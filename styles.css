@@ -1,27 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500;700&family=Press+Start+2P&display=swap');
 
+/* ========== Variables ========== */
 :root {
 	--cream: #f8f3eb;
 	--orange: #954006;
 	--slate: #344257;
 	--teal: #3d7d82;
-	--purple: #302844;
+	--night: #302844;
+	--violet: #4d4187;
+	--panel: #303d50;
+	--panel-dark: #292f41;
+	--green: #8fdc5a;
+	--paper: #c4c3d0;
+	--line: #0d0d12;
+	--font-pixel: 'Press Start 2P', monospace;
+	--font-body: 'Noto Sans', sans-serif;
 }
 
+/* ========== Base ========== */
 * {
 	box-sizing: border-box;
 }
 
-html,
-body {
-	min-height: 100%;
-}
-
 body {
 	margin: 0;
+	min-height: 100vh;
 	color: var(--cream);
-	font-family: 'Press Start 2P', monospace;
-	background: var(--purple) url('img/bg.jpg') center / cover fixed no-repeat;
+	font-family: var(--font-pixel);
+	background: var(--night) url('img/bg.jpg') center top / cover fixed no-repeat;
+}
+
+/* Only pages with the app frame lock the scroll; login/register scroll normally */
+body:has(.app) {
+	overflow: hidden;
 }
 
 button,
@@ -29,11 +40,36 @@ input {
 	font: inherit;
 }
 
+button {
+	color: inherit;
+	cursor: pointer;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.sr-only,
+.field span {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* ========== Login & register ========== */
 .login-page {
 	min-height: 100vh;
 	display: grid;
 	place-items: center;
 	padding: 24px;
+	overflow-y: auto;
 }
 
 .login-shell {
@@ -77,18 +113,6 @@ input {
 	overflow: hidden;
 }
 
-.field span {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border: 0;
-}
-
 .field input {
 	display: block;
 	width: 100%;
@@ -114,17 +138,22 @@ input {
 .login-button {
 	min-height: 56px;
 	margin-top: 2px;
+	padding: 0 24px;
 	border: 4px solid var(--slate);
 	border-radius: 14px;
 	color: var(--cream);
 	background: var(--slate);
 	font-size: 16px;
-	cursor: pointer;
 }
 
 .login-button:hover,
 .login-button:focus-visible {
 	background: #40516a;
+}
+
+.login-button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 
 .account-prompt {
@@ -135,83 +164,43 @@ input {
 }
 
 .account-prompt a {
-	color: var(--cream);
+	text-decoration: underline;
 }
 
-.sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border: 0;
+.register-shell {
+	width: min(520px, 100%);
+	padding-top: 116px;
 }
 
-@media (max-width: 520px) {
-	.login-page {
-		padding: 16px;
-	}
-
-	.login-shell {
-		padding-top: 104px;
-	}
-
-	.login-brand {
-		padding: 22px 12px;
-		border-width: 10px;
-	}
-
-	.login-panel {
-		padding: 30px 24px 26px;
-	}
-
-	.login-form {
-		gap: 22px;
-	}
-
-	.field input {
-		min-height: 66px;
-	}
-}
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-:root {
-	--ink: #f8f3eb;
-	--panel: #303d50;
-	--panel-dark: #292f41;
-	--orange: #954006;
-	--purple: #4d4187;
+.register-brand {
+	width: min(460px, calc(100% - 16px));
+	font-size: clamp(17px, 4vw, 29px);
 }
 
-* {
-	box-sizing: border-box;
+.register-panel {
+	padding: 34px 38px 30px;
 }
 
-body {
-	margin: 0;
-	min-height: 100vh;
-	overflow: hidden;
-	color: var(--ink);
-	font-family: 'Press Start 2P', monospace;
-	background: #2f3040 url('img/bg.jpg') center top / cover fixed no-repeat;
+.register-form {
+	gap: 20px;
 }
 
-button {
-	font: inherit;
-	color: inherit;
-	cursor: pointer;
+.register-form .field input {
+	min-height: 66px;
+	font-size: clamp(14px, 3vw, 21px);
 }
 
-/* Main frame and navigation */
+.register-form .login-button {
+	margin-top: 5px;
+}
+
+/* ========== App frame (dashboard + inner pages) ========== */
 .app {
+	position: relative;
 	width: min(1400px, calc(100% - 28px));
 	height: calc(100vh - 70px);
 	margin: 18px auto 0;
 	padding: 58px 0 18px;
-	position: relative;
 	overflow: hidden;
 	background: var(--orange);
 	border: 8px solid var(--orange);
@@ -234,15 +223,15 @@ button {
 .brand {
 	position: absolute;
 	z-index: 2;
-	top: 0px;
+	top: 0;
 	left: 50%;
 	width: min(375px, 45%);
 	transform: translateX(-50%);
 	padding: 24px 18px;
 	border: 10px solid var(--orange);
 	border-radius: 24px;
-	background: #344257;
-	box-shadow: 0 0 0 2px #344257;
+	background: var(--slate);
+	box-shadow: 0 0 0 2px var(--slate);
 	text-align: center;
 	font-size: clamp(18px, 2.4vw, 30px);
 }
@@ -251,16 +240,15 @@ button {
 	height: 100%;
 	display: grid;
 	grid-template-columns: 230px 1fr;
-	gap: 0;
 	min-height: 0;
 }
 
 .sidebar {
-	padding: 42px 8px 0;
-	text-align: center;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding: 42px 8px 24px;
+	text-align: center;
 }
 
 .profile-image {
@@ -271,26 +259,18 @@ button {
 	mix-blend-mode: screen;
 }
 
+/* auto bottom margin pushes Setting / About Us to the bottom of the sidebar */
 .profile-name {
-	margin: 8px 0 245px;
+	margin: 8px 0 auto;
 	font-size: 26px;
 }
 
 .side-link {
 	display: block;
-	margin: 16px auto;
+	margin: 16px auto 0;
 	border: 0;
 	background: transparent;
 	font-size: 19px;
-}
-
-.side-link img {
-	width: 24px;
-	height: 24px;
-	margin-right: 8px;
-	vertical-align: middle;
-	object-fit: contain;
-	mix-blend-mode: screen;
 }
 
 .mascot-strip {
@@ -307,17 +287,31 @@ button {
 	mix-blend-mode: screen;
 }
 
-/* Dashboard content and cards */
 .content {
 	min-width: 0;
 	min-height: 0;
-	padding: 55px 20px 20px;
-	border-right: 14px solid var(--orange);
-	background: var(--panel);
 	display: flex;
 	flex-direction: column;
+	padding: 55px 20px 20px;
+	overflow-y: auto;
+	border-right: 14px solid var(--orange);
+	background: var(--panel);
 }
 
+/* Small badge with the current page name, top right of the content area */
+.page-tab {
+	position: absolute;
+	z-index: 2;
+	top: 70px;
+	right: 44px;
+	padding: 10px 18px;
+	border-radius: 14px;
+	background: var(--slate);
+	box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+	font-size: 12px;
+}
+
+/* ========== Dashboard ========== */
 .welcome {
 	margin: 0 0 38px;
 	text-align: center;
@@ -335,15 +329,22 @@ button {
 }
 
 .tile {
-	min-height: 0;
 	position: relative;
-	border: 6px solid #496f78;
-	border-radius: 22px;
-	background: var(--panel-dark);
+	min-height: 0;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
+	border: 6px solid #496f78;
+	border-radius: 22px;
+	background: var(--panel-dark);
+	transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.tile:hover,
+.tile:focus-visible {
+	transform: translateY(-3px);
+	filter: brightness(1.1);
 }
 
 .tile img {
@@ -382,27 +383,6 @@ button {
 	font-size: 16px;
 }
 
-.quiz-label {
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	white-space: nowrap;
-}
-
-.quiz .wide-art {
-	transform: scale(3);
-	margin-bottom: 45px;
-}
-
-.games-label {
-	bottom: 14%;
-	width: 78%;
-	padding: 8px 0;
-	border-radius: 18px;
-	background: #c02e5d;
-	text-align: center;
-}
-
 .summary {
 	border-color: #272b39;
 	background: #d1d0d8;
@@ -421,56 +401,386 @@ button {
 
 .quiz {
 	grid-column: 1 / 3;
-	min-height: 0;
 	border-color: #352a63;
-	background: var(--purple);
+	background: var(--violet);
+}
+
+.quiz .wide-art {
+	transform: scale(3);
+	margin-bottom: 45px;
+}
+
+.quiz-label {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	white-space: nowrap;
 }
 
 .games {
 	grid-column: 3;
 	grid-row: 1 / 3;
-	min-height: 0;
 	border-color: #272b39;
 }
 
-.games img {
-	max-width: 100%;
-	max-height: 100%;
+.games-label {
+	bottom: 14%;
+	width: 78%;
+	padding: 8px 0;
+	border-radius: 18px;
+	background: #c02e5d;
+	text-align: center;
 }
 
-/* Registration page */
-.register-page {
+/* ========== Chat page ========== */
+.chat-topbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 18px;
+}
+
+.chat-title {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: var(--cream);
+	font-family: var(--font-body);
+	font-size: 14px;
+	font-weight: 700;
+}
+
+.chat-log {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	padding: 4px 8px 18px;
 	overflow-y: auto;
 }
 
-.register-shell {
-	width: min(520px, 100%);
-	padding-top: 116px;
+.msg {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	max-width: 78%;
 }
 
-.register-brand {
-	width: min(460px, calc(100% - 16px));
-	font-size: clamp(17px, 4vw, 29px);
+/* Teks pesan biasa, tanpa kotak/gelembung. Jarak antar giliran pflege lewat
+   .chat-log { gap: 30px } di atas supaya pertanyaan dan jawaban jelas terpisah. */
+.msg > .msg-text {
+	min-width: 0;
+	color: var(--cream);
+	font-family: var(--font-body);
+	font-size: 16px;
+	line-height: 1.65;
+	overflow-wrap: anywhere;
 }
 
-.register-panel {
-	padding: 34px 38px 30px;
+.msg-ai {
+	align-self: flex-start;
+	justify-content: flex-start;
 }
 
-.register-form {
+.msg-user {
+	align-self: flex-end;
+	justify-content: flex-end;
+}
+
+.msg-user > .msg-text {
+	text-align: right;
+	color: #cdfd6d;
+}
+
+.chat-mascot {
+	flex-shrink: 0;
+	width: 64px;
+	height: 64px;
+	object-fit: contain;
+	image-rendering: pixelated;
+	mix-blend-mode: screen;
+}
+
+.chat-form {
+	display: flex;
+	gap: 12px;
+	margin-top: 8px;
+}
+
+.chat-form input {
+	flex: 1;
+	min-width: 0;
+	padding: 16px 24px;
+	border: 3px solid var(--line);
+	border-radius: 999px;
+	box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+	outline: 0;
+	background: var(--green);
+	color: #111;
+	font-family: var(--font-body);
+	font-size: 17px;
+}
+
+.chat-form input::placeholder {
+	color: #35502a;
+}
+
+.chat-form input:focus {
+	background: #a3e874;
+}
+
+.chat-send {
+	width: 58px;
+	border: 3px solid var(--line);
+	border-radius: 999px;
+	background: var(--slate);
+	font-size: 18px;
+}
+
+.chat-send:hover {
+	background: #40516a;
+}
+
+/* ========== Summary & quiz pages ========== */
+.summary-content,
+.quiz-content {
+	align-items: center;
+}
+
+.page-avatar {
+	width: 72px;
+	height: 72px;
+	margin-bottom: 8px;
+	object-fit: contain;
+	image-rendering: pixelated;
+	mix-blend-mode: screen;
+}
+
+.summary-stage,
+.quiz-stage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	gap: 20px;
+	width: min(760px, 100%);
 }
 
-.register-form .field input {
-	min-height: 66px;
-	font-size: clamp(14px, 3vw, 21px);
+.dropzone {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	width: 100%;
+	padding: 64px 20px;
+	border: 4px dashed var(--line);
+	border-radius: 24px;
+	background: var(--paper);
+	color: #111;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background 0.15s ease;
 }
 
-.register-form .login-button {
-	margin-top: 5px;
+.dropzone:hover {
+	background: #d3d2de;
+}
+
+.dropzone img {
+	width: 56px;
+	height: 56px;
+	object-fit: contain;
+}
+
+/* Font dan ukuran ditaruh di container, BUKAN hanya di <p>. Kalau cuma <p> yang
+   diatur, elemen markdown lain seperti <ul>/<li> tidak mewarisi apa pun dan jatuh
+   ke font pixel bawaan body, sehingga teks ringkasan terlihat campur. */
+.result-panel {
+	width: 100%;
+	padding: 28px 32px;
+	border: 3px solid var(--line);
+	border-radius: 24px;
+	background: var(--paper);
+	color: #111;
+	text-align: left;
+	font-family: var(--font-body);
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.7;
+}
+
+.result-panel h2 {
+	margin: 0 0 18px;
+	font-family: var(--font-body);
+	font-size: 22px;
+}
+
+/* Rata kiri, bukan justify: justify bikin jarak antar kata aneh kalau ada baris panjang. */
+.result-panel p {
+	margin: 0;
+	font-family: var(--font-body);
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.7;
+	text-align: left;
+}
+
+.quiz-box,
+.quiz-explain-box {
+	width: 100%;
+	padding: 26px 30px;
+	border: 3px solid var(--line);
+	border-radius: 24px;
+	background: var(--violet);
+	text-align: left;
+	font-family: var(--font-body);
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.6;
+}
+
+.quiz-box {
+	min-height: 130px;
+	font-size: 18px;
+}
+
+/* Label "Explanation:" tetap font pixel supaya tetap terbaca sebagai judul,
+   sementara isi penjelasan di bawahnya memakai font body. */
+.quiz-explain-box h3 {
+	margin: 0 0 14px;
+	font-family: var(--font-pixel);
+	font-size: 16px;
+}
+
+.quiz-explain-box p,
+.quiz-explain-text {
+	margin: 0;
+	font-family: var(--font-body);
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.6;
+}
+
+.quiz-options {
+	display: grid;
+	gap: 12px;
+	width: 100%;
+}
+
+.option {
+	padding: 18px 26px;
+	border: 3px solid var(--line);
+	border-radius: 24px;
+	background: #4a76cc;
+	font-family: var(--font-body);
+	font-size: 16px;
+	font-weight: 700;
+	text-align: left;
+	transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.option:hover,
+.option:focus-visible {
+	background: #5f8fe0;
+	transform: translateX(4px);
+}
+
+/* ========== Small screens ========== */
+@media (max-width: 900px) {
+	body:has(.app) {
+		overflow: auto;
+	}
+
+	.app {
+		height: auto;
+		min-height: calc(100vh - 36px);
+	}
+
+	.layout {
+		grid-template-columns: 1fr;
+	}
+
+	.sidebar {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 12px;
+		padding: 74px 8px 8px;
+	}
+
+	.profile-image {
+		width: 64px;
+		height: 64px;
+	}
+
+	.profile-name {
+		margin: 0 12px 0 0;
+		font-size: 16px;
+	}
+
+	.side-link {
+		margin: 0;
+		font-size: 13px;
+	}
+
+	.mascot-strip {
+		display: none;
+	}
+
+	.dashboard {
+		grid-template-columns: 1fr;
+		grid-template-rows: none;
+	}
+
+	.tile {
+		min-height: 200px;
+	}
+
+	.quiz,
+	.games {
+		grid-column: auto;
+		grid-row: auto;
+	}
+
+	.page-tab {
+		top: 74px;
+		right: 20px;
+	}
+
+	.msg {
+		max-width: 92%;
+	}
 }
 
 @media (max-width: 520px) {
+	.login-page {
+		padding: 16px;
+	}
+
+	.login-shell {
+		padding-top: 104px;
+	}
+
+	.login-brand {
+		padding: 22px 12px;
+		border-width: 10px;
+	}
+
+	.login-panel {
+		padding: 30px 24px 26px;
+	}
+
+	.login-form {
+		gap: 22px;
+	}
+
+	.field input {
+		min-height: 66px;
+	}
+
 	.register-shell {
 		padding-top: 96px;
 	}
