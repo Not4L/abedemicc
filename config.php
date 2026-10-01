@@ -76,7 +76,7 @@ function asset_url(string $path): string
 // ==== Gemini (Fase 3) ====
 // GANTI dua baris di bawah dengan API key & model milikmu sendiri (JANGAN hapus baris ini begitu saja,
 // cukup isi ulang dengan nilai yang sudah kamu pakai sebelumnya).
-define('GEMINI_API_KEY', '	your api ');
+define('GEMINI_API_KEY', 'isi_api_key_anda_di_sini');
 define('GEMINI_MODEL', 'gemini-3.1-flash-lite');
 
 define('ABE_SYSTEM_PROMPT', <<<PROMPT
@@ -94,4 +94,4 @@ Format jawaban (PENTING, selalu ikuti):
 - Pecah jadi paragraf pendek (maksimal 2-3 kalimat per paragraf), jangan satu paragraf panjang tanpa jeda.
 - Pakai tanda hubung "- " di awal baris untuk daftar poin kalau ada beberapa hal yang disebutkan.
 - Pakai **teks tebal** untuk istilah atau kata kunci penting.
-PROMPT);
+PROMPT); 
