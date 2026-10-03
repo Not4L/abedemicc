@@ -76,7 +76,7 @@ function asset_url(string $path): string
 // ==== Gemini (Fase 3) ====
 // GANTI dua baris di bawah dengan API key & model milikmu sendiri (JANGAN hapus baris ini begitu saja,
 // cukup isi ulang dengan nilai yang sudah kamu pakai sebelumnya).
-define('GEMINI_API_KEY', 'AQ.Ab8RN6I0jCJggD01R-nL0QgEXZad28FwypSmUKCJOi6Qj1CxHw');
+define('GEMINI_API_KEY', 'isi_api_key_anda_di_sini');
 define('GEMINI_MODEL', 'gemini-3.1-flash-lite');
 
 // ==== Aturan game "Run & Jump" ====
